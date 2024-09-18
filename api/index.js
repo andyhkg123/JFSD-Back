@@ -9,7 +9,7 @@ const cookieParser = require("cookie-parser");
 app.use(express.json());
 app.use(
   cors({
-    // origin: `${process.env.REACT_APP_FAPI_URL}`,
+    origin: `${process.env.REACT_APP_FAPI_URL}`,
     origin: "http://localhost:3000",
     credentials: true,
   })
