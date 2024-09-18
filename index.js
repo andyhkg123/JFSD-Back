@@ -235,6 +235,8 @@ app.post("/login", async (req, res) => {
       httpOnly: false,
       secure: true, // Use 'true' in production
       sameSite: "none",
+      domain: ".jfsd-front.vercel.app", // Set the domain to the frontend
+      path: "/",
       maxAge: 3600000, // 1 hour
     });
     return res.json({ message: "Logged in" });
