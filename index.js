@@ -232,10 +232,10 @@ app.post("/login", async (req, res) => {
 
     // Set the cookie
     res.cookie("user_id", user._id.toString(), {
-      httpOnly: false,
-      secure: true, // Use 'true' in production
+      httpOnly: false, // True in production
+      secure: true, // True in production
       sameSite: "none",
-      domain: ".jfsd-front.vercel.app", // Set the domain to the frontend
+      domain: ".jfsd-front.vercel.app", // Ensure this is correct
       path: "/",
       maxAge: 3600000, // 1 hour
     });
