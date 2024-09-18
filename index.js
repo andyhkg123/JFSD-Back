@@ -9,6 +9,7 @@ const cookieParser = require("cookie-parser");
 const allowedOrigins = [
   process.env.REACT_APP_FAPI_URL, // Deployed front-end URL
   "http://localhost:3000", // Local development
+  "https://jfsd-front.vercel.app",
 ];
 
 app.use(
