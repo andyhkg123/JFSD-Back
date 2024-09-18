@@ -11,7 +11,6 @@ const allowedOrigins = [
   "http://localhost:3000", // Local development
 ];
 
-// Set up CORS
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -21,7 +20,8 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true, // Allows cookies to be sent
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
   })
 );
 
