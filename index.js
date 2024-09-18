@@ -1,14 +1,19 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
-const port = process.env.PORT;
+// const port = process.env.PORT;
+const port = 8080;
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
+
+console.log(process.env.REACT_APP_FAPI_URL);
 
 app.use(express.json());
 app.use(
   cors({
     origin: `${process.env.REACT_APP_FAPI_URL}`,
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -130,6 +135,7 @@ app.get("/user_valid", async (req, res) => {
 
     // Retrieve user information
     const result = await getUserValid(req.query._id);
+    ////http://localhost:8080/user_valid?_id=669ddd88dd5303e516871ca6 query string
     if (!result) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -210,13 +216,13 @@ app.post("/login", async (req, res) => {
     }
 
     // Set the cookie
-    // res.cookie("user_id", user._id.toString(), {
-    //   httpOnly: false,
-    //   secure: true, // Use 'true' in production
-    //   sameSite: "none",
-    //   maxAge: 3600000, // 1 hour
-    // });
-    return res.json({ message: "Logged in", user_id: user._id.toString() });
+    res.cookie("user_id", user._id.toString(), {
+      httpOnly: false,
+      secure: true, // Use 'true' in production
+      sameSite: "none",
+      maxAge: 3600000, // 1 hour
+    });
+    return res.json({ message: "Logged in" });
   } catch (error) {
     console.error("Error logging in:", error);
   }

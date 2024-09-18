@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 // const port = process.env.PORT;
@@ -5,6 +6,8 @@ const port = 8080;
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
+
+console.log(process.env.REACT_APP_FAPI_URL);
 
 app.use(express.json());
 app.use(
