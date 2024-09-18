@@ -6,17 +6,27 @@ const port = 8080;
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
+const allowedOrigins = [
+  process.env.REACT_APP_FAPI_URL, // Deployed front-end URL
+  "http://localhost:3000", // Local development
+];
 
-console.log(process.env.REACT_APP_FAPI_URL);
-
-app.use(express.json());
+// Set up CORS
 app.use(
   cors({
-    origin: `${process.env.REACT_APP_FAPI_URL}`,
-    origin: "http://localhost:3000",
-    credentials: true,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // Allows cookies to be sent
   })
 );
+
+app.use(express.json());
+
 app.use(cookieParser());
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
