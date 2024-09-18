@@ -139,24 +139,28 @@ async function getUserValid(id) {
 
 app.get("/user_valid", async (req, res) => {
   try {
+    const userId = req.query._id;
+
     // Check if _id is provided in the query
-    if (!req.query._id) {
+    if (!userId) {
+      console.log("Missing _id parameter");
       return res.status(400).json({ error: "Missing _id parameter" });
     }
 
     // Retrieve user information
-    const result = await getUserValid(req.query._id);
-    ////http://localhost:8080/user_valid?_id=669ddd88dd5303e516871ca6 query string
+    const result = await getUserValid(userId);
+
     if (!result) {
-      return res.status(404).json({ error: "User not found" });
+      console.log("User not found for ID:", userId);
+      return res.status(404).json({ error: "User not found", isValid: false });
     }
 
-    // Log for debugging purposes
-    // console.log("User found:", result);
-
-    res.json(result);
+    // If user is found, return the isValid field as true
+    console.log("User found:", result);
+    res.json({ isValid: true });
   } catch (err) {
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Internal Server Error:", err);
+    res.status(500).json({ error: "Internal Server Error", isValid: false });
   }
 });
 ///////////sign up page////////////
